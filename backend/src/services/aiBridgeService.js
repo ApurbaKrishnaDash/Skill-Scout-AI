@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const AI_BASE_URL = "http://192.168.0.100:8000";
+const AI_BASE_URL = "http://127.0.0.1:8000";
 
 // Manager Agent
 exports.analyzeGoal = async (data) => {
