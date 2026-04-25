@@ -1,35 +1,59 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsLoggedIn(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+
+    alert("Logged out successfully");
+
+    window.location.href = "/login";
+  };
+
   return (
-    <nav className="bg-white shadow-sm border-b">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <Link href="/" className="text-xl font-bold text-blue-600">
+    <nav className="w-full border-b bg-white shadow-sm">
+      <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+        <Link href="/" className="text-2xl font-bold text-blue-600">
           AI Skill Manager
         </Link>
 
-        <div className="flex gap-4 text-sm md:text-base">
-          <Link href="/" className="hover:text-blue-600">
-            Home
-          </Link>
-          <Link href="/register" className="hover:text-blue-600">
-            Register
-          </Link>
-          <Link href="/login" className="hover:text-blue-600">
-            Login
-          </Link>
-          <Link href="/dashboard" className="hover:text-blue-600">
-            Dashboard
-          </Link>
-          <Link href="/goals" className="hover:text-blue-600">
-            Goals
-          </Link>
-          <Link href="/summaries" className="hover:text-blue-600">
-            Summaries
-          </Link>
-          <Link href="/admin" className="hover:text-blue-600">
-            Admin
-          </Link>
+        <div className="flex gap-6 text-sm font-medium items-center">
+          <Link href="/">Home</Link>
+
+          {isLoggedIn && (
+            <>
+              <Link href="/dashboard">Dashboard</Link>
+              <Link href="/goals">Goals</Link>
+              <Link href="/summaries">Summaries</Link>
+              <Link href="/admin">Admin</Link>
+            </>
+          )}
+
+          {!isLoggedIn ? (
+            <>
+              <Link href="/login" className="text-blue-600">
+                Login
+              </Link>
+              <Link href="/register">Register</Link>
+            </>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-3 py-1 rounded-md"
+            >
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </nav>

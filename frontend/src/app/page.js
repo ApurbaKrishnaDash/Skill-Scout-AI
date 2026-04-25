@@ -2,26 +2,33 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="text-center max-w-xl">
-        <h1 className="text-4xl font-bold mb-4">AI Skill Manager</h1>
+    <main className="min-h-screen flex items-center justify-center px-6">
+      <section className="max-w-4xl text-center">
+        <h1 className="text-5xl font-bold mb-6">
+          Build better skills with AI guidance
+        </h1>
 
-        <p className="text-gray-600 mb-6">
-          Plan, track, and improve your learning with AI-powered guidance.
+        <p className="text-lg text-gray-600 mb-8">
+          Plan your goals, generate study schedules, and get AI-based advice to
+          stay consistent in your learning journey.
         </p>
 
         <div className="flex justify-center gap-4">
-          <Link href="/register">
-            <button className="bg-blue-600 text-white px-5 py-2 rounded-lg">
-              Get Started
-            </button>
+          <Link
+            href="/register"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold"
+          >
+            Get Started
           </Link>
 
-          <Link href="/login">
-            <button className="border px-5 py-2 rounded-lg">Login</button>
+          <Link
+            href="/login"
+            className="border px-6 py-3 rounded-lg font-semibold bg-white"
+          >
+            Login
           </Link>
         </div>
-      </div>
+      </section>
     </main>
   );
 }

@@ -26,7 +26,9 @@ const createGoal = async (req, res) => {
 // get goals
 const getGoals = async (req, res) => {
   try {
-    const goals = await Goal.find({ userId: req.user.id });
+    const goals = await Goal.find({ userId: req.user.id }).sort({
+      createdAt: -1,
+    });
 
     res.json({
       count: goals.length,
@@ -34,6 +36,25 @@ const getGoals = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+// AI advice for goal
+const getGoalAdvice = async (req, res) => {
+  try {
+    const { goal, currentLevel, current_level, problem } = req.body;
+
+    const result = await aiService.getAdvice({
+      goal,
+      current_level: currentLevel || current_level,
+      problem,
+    });
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      error: err.response?.data || err.message,
+    });
   }
 };
 
@@ -55,5 +76,6 @@ const testAI = async (req, res) => {
 module.exports = {
   createGoal,
   getGoals,
+  getGoalAdvice,
   testAI,
 };

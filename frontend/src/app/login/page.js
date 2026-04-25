@@ -17,11 +17,35 @@ export default function LoginPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Login Data:", form);
-    alert("Login done");
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        // ✅ Save token
+        localStorage.setItem("token", data.token);
+
+        alert("Login successful ✅");
+
+        // optional redirect
+        window.location.href = "/goals";
+      } else {
+        alert(data.message || "Login failed ❌");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error connecting to server ❌");
+    }
   };
 
   return (

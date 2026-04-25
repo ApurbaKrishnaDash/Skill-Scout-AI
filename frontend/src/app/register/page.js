@@ -23,7 +23,7 @@ export default function RegisterPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("/backend/api/auth/register", {
+      const res = await fetch("http://localhost:5000/api/auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,16 +32,19 @@ export default function RegisterPage() {
           name: form.name,
           email: form.email,
           password: form.password,
+          studyHoursPerWeek: form.studyHoursPerWeek,
         }),
       });
 
-      const text = await res.text();
+      const data = await res.json();
 
-      alert(
-        `STATUS: ${res.status}\n\nCONTENT-TYPE: ${res.headers.get(
-          "content-type",
-        )}\n\nRESPONSE:\n${text}`,
-      );
+      if (!res.ok) {
+        alert(data.message || "Registration failed ❌");
+        return;
+      }
+
+      alert("Registration successful ✅");
+      window.location.href = "/login";
     } catch (err) {
       alert("ERROR: " + err.message);
     }
