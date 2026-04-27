@@ -18,11 +18,14 @@ export default function DashboardPage() {
       if (!token) return;
 
       try {
-        const res = await fetch("http://localhost:5000/api/goals", {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        const res = await fetch(
+          "https://skill-scout-ai.onrender.com/api/goals",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-        });
+        );
 
         const data = await res.json();
 

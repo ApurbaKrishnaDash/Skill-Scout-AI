@@ -21,21 +21,24 @@ export default function LoginPage() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        "https://skill-scout-ai.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
         },
-        body: JSON.stringify(form),
-      });
+      );
 
       const data = await res.json();
 
       if (res.ok) {
-        // ✅ Save token
+        // Save token
         localStorage.setItem("token", data.token);
 
-        alert("Login successful ✅");
+        alert("Login successful ");
 
         // optional redirect
         window.location.href = "/goals";

@@ -90,18 +90,21 @@ export default function GoalsPage() {
       setLoadingAdvice(true);
       setAdvice(null);
 
-      const res = await fetch("http://localhost:5000/api/goals/ai-advice", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        "https://skill-scout-ai.onrender.com/api/goals/ai-advice",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            goal: form.title,
+            currentLevel: form.currentLevel,
+            problem,
+          }),
         },
-        body: JSON.stringify({
-          goal: form.title,
-          currentLevel: form.currentLevel,
-          problem,
-        }),
-      });
+      );
 
       const data = await res.json();
 
